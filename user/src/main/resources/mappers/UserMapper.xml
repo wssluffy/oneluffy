@@ -11,21 +11,30 @@
 
     <update id="updateUser">
         UPDATE user
-        SET name=#{name}, gender=#{gender}, age=#{age}, address=#{address}, phone=#{phone}, email=#{email}, updated_at=#{updatedAt}
-        WHERE id=#{id}
+        SET name=#{name},
+            gender=#{gender},
+            age=#{age},
+            address=#{address},
+            phone=#{phone},
+            email=#{email},
+            updated_at=#{updatedAt}
+        WHERE id = #{id}
     </update>
 
     <delete id="deleteUser">
-        DELETE FROM user
-        WHERE id=#{id}
+        DELETE
+        FROM user
+        WHERE id = #{id}
     </delete>
 
     <select id="getUserById" resultType="com.oneluffy.user.entity.User">
-        SELECT * FROM user
-        WHERE id=#{id}
+        SELECT id, name, gender, age, address, phone, email, created_at, updated_at
+        FROM user
+        WHERE id = #{id}
     </select>
 
     <select id="getAllUsers" resultType="com.oneluffy.user.entity.User">
-        SELECT * FROM user
+        SELECT id, name, gender, age, address, phone, email, created_at, updated_at
+        FROM user
     </select>
 </mapper>
