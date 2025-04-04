@@ -1,11 +1,10 @@
-package com.oneluffy.user.zt;
+package com.oneluffy.zt;
 
 import java.util.Scanner;
 
 public class ZT06 {
-  private static String[] content;
 
-  public static void main(String[] args) {
+    public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
     String input = sc.nextLine();
     int start = Integer.parseInt(sc.nextLine());
@@ -26,7 +25,7 @@ public class ZT06 {
       return "EMPTY";
     }
     while (start < end) {
-      String temp = "";
+      String temp;
       temp = content[end];
       content[end] = content[start];
       content[start] = temp;

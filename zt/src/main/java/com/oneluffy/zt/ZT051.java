@@ -1,8 +1,7 @@
 
-package com.oneluffy.user.zt;
+package com.oneluffy.zt;
 
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Scanner;
 /*
 051 【数组组成的最小数字】
@@ -58,12 +57,7 @@ public class ZT051 {
         }
 
         // Sort the array based on the concatenated result
-        Arrays.sort(strNumbers, new Comparator<String>() {
-            @Override
-            public int compare(String a, String b) {
-                return (a + b).compareTo(b + a);
-            }
-        });
+        Arrays.sort(strNumbers, (a, b) -> (a + b).compareTo(b + a));
 
         StringBuilder sb = new StringBuilder();
         for (String number : strNumbers) {

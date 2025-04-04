@@ -1,4 +1,4 @@
-package com.oneluffy.user.zt;
+package com.oneluffy.zt;
 
 import java.util.Scanner;
 
@@ -28,15 +28,15 @@ public class ZT01 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         String[] input = sc.nextLine().split(" ");
-        for (int i = 0; i < input.length; i++) {
-            operate(Integer.parseInt(input[i]));
+        for (String s : input) {
+            operate(Integer.parseInt(s));
         }
         System.out.println(screen.length());
-    }//a
+    }
 
     public static void operate(int num){
         if (num == 1){//a screen输入一个a
-            if (choose.equals("")){
+            if (choose.isEmpty()){
                 screen += "a";
             }else {
                 choose = "";
@@ -55,7 +55,7 @@ public class ZT01 {
             return;
         }
         if (num ==4){//ctrl-v
-            if (choose.equals("")){
+            if (choose.isEmpty()){
                 screen += jianQie;
             }else {
                 screen = jianQie;

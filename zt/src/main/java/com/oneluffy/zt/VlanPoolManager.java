@@ -1,4 +1,4 @@
-package com.oneluffy.user.zt;
+package com.oneluffy.zt;
 
 import java.util.ArrayList;
 import java.util.Collections;

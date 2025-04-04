@@ -1,4 +1,4 @@
-package com.oneluffy.user.zt;
+package com.oneluffy.zt;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,16 +47,16 @@ public class ZT04 {
         String[] input = sc.nextLine().split(",");
         int search = sc.nextInt();
         List<Integer> list = new ArrayList<>();
-        for (int i = 0; i < input.length; i++) {
-            if (input[i].contains("-")){
-                String[] num = input[i].split("-");
+        for (String s : input) {
+            if (s.contains("-")) {
+                String[] num = s.split("-");
                 int start = Integer.parseInt(num[0]);
                 int end = Integer.parseInt(num[1]);
-                for (int j = start; j <end+1 ; j++) {
+                for (int j = start; j < end + 1; j++) {
                     list.add(j);
                 }
-            }else {
-                list.add(Integer.parseInt(input[i]));
+            } else {
+                list.add(Integer.parseInt(s));
             }
         }
 

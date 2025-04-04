@@ -1,7 +1,6 @@
-package com.oneluffy.user.zt;
+package com.oneluffy.zt;
 
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -50,13 +49,10 @@ public class DiskSorter {
         }
         scanner.close();
 
-        Arrays.sort(disks, new Comparator<String>() {
-            @Override
-            public int compare(String o1, String o2) {
-                long size1 = parseDiskSize(o1);
-                long size2 = parseDiskSize(o2);
-                return Long.compare(size1, size2);
-            }
+        Arrays.sort(disks, (o1, o2) -> {
+            long size1 = parseDiskSize(o1);
+            long size2 = parseDiskSize(o2);
+            return Long.compare(size1, size2);
         });
 
         for (String disk : disks) {
@@ -75,10 +71,10 @@ public class DiskSorter {
                     totalSizeInM += size;
                     break;
                 case 'G':
-                    totalSizeInM += size * 1024;
+                    totalSizeInM += size * 1024L;
                     break;
                 case 'T':
-                    totalSizeInM += size * 1024 * 1024;
+                    totalSizeInM += (long) size * 1024 * 1024;
                     break;
             }
         }

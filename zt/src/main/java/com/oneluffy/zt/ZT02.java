@@ -1,4 +1,4 @@
-package com.oneluffy.user.zt;
+package com.oneluffy.zt;
 /*002 【N进制减法】
 实现一个基于字符串的N机制的减法。
 需要对输入的两个字符串按照给定的N进制进行减法操作，输出正负符号和表示结果的字符串。
@@ -51,8 +51,8 @@ public class ZT02 {//2 11 1
     if (jianStr.endsWith("/0")) {
       jianStr = jianStr.substring(0, jianStr.length() - 2);
     }
-    int no1 = 0;
-    int no2 = 0;
+    int no1;
+    int no2;
     try {
       no1 = Integer.parseInt(numStr, jin);
       no2 = Integer.parseInt(jianStr, jin);

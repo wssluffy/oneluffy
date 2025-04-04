@@ -1,4 +1,4 @@
-package com.oneluffy.user.zt;
+package com.oneluffy.zt;
 
 public class InterfaceSuccessRateAnalyzer {
 

@@ -1,4 +1,4 @@
-package com.oneluffy.user.zt;
+package com.oneluffy.zt;
 
 import java.util.*;
 
@@ -90,19 +90,16 @@ public class ZT08AI {
         }
 
         // 按照总分和高分值数量排序
-        Collections.sort(contestants, new Comparator<Contestant>() {
-            @Override
-            public int compare(Contestant c1, Contestant c2) {
-                if (c2.totalScore != c1.totalScore) {
-                    return c2.totalScore - c1.totalScore;
-                }
-                for (int i = 10; i >= 1; i--) {
-                    if (c2.highScoreCount[i] != c1.highScoreCount[i]) {
-                        return c2.highScoreCount[i] - c1.highScoreCount[i];
-                    }
-                }
-                return 0;
+        contestants.sort((c1, c2) -> {
+            if (c2.totalScore != c1.totalScore) {
+                return c2.totalScore - c1.totalScore;
             }
+            for (int i = 10; i >= 1; i--) {
+                if (c2.highScoreCount[i] != c1.highScoreCount[i]) {
+                    return c2.highScoreCount[i] - c1.highScoreCount[i];
+                }
+            }
+            return 0;
         });
 
         // 输出前3名选手的编号

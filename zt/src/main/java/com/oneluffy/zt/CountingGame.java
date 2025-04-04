@@ -1,4 +1,4 @@
-package com.oneluffy.user.zt;
+package com.oneluffy.zt;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +51,7 @@ public class CountingGame {
     // 排序
     result.sort(Integer::compareTo);
 
-    return result.toString().replaceAll("\\[|\\]", "").replaceAll(", ", ",");
+    return result.toString().replaceAll("[\\[\\]]", "").replaceAll(", ", ",");
   }
 
   public static void main(String[] args) {

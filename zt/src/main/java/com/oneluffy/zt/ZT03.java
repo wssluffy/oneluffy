@@ -1,4 +1,4 @@
-package com.oneluffy.user.zt;
+package com.oneluffy.zt;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -58,7 +58,7 @@ public class ZT03 {
                     content.append(input[i]).append(" ");
                 }
             }
-            map.put(tagTemp,new Inner(length,content.toString()));
+            map.put(tagTemp,new Inner(content.toString()));
             idx += length;
         }
 
@@ -67,11 +67,9 @@ public class ZT03 {
     }
 
     static class Inner{
-        private int length;
-        private String content;
+        private final String content;
 
-        public Inner(int length, String content) {
-            this.length = length;
+        public Inner(String content) {
             this.content = content;
         }
     }

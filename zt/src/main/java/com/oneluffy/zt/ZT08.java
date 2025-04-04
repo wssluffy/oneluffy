@@ -1,4 +1,4 @@
-package com.oneluffy.user.zt;
+package com.oneluffy.zt;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,9 +48,9 @@ public class ZT08 {
 
     }
     static class Player implements Comparable<Player>{
-        private int idx;
-        private int total;
-        private List<Integer> scores;
+        private final int idx;
+        private final int total;
+        private final List<Integer> scores;
 
         public Player(int idx,int total, List<Integer> scores) {
             this.idx = idx;
@@ -60,8 +60,8 @@ public class ZT08 {
 
         private int checkCount(List<Integer> list,int count){
             int cou = 0;
-            for (int i = 0; i < list.size(); i++) {
-                if (list.get(i) == count) {
+            for (Integer integer : list) {
+                if (integer == count) {
                     cou++;
                 }
             }

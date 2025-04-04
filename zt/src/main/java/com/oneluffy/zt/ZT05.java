@@ -1,4 +1,4 @@
-package com.oneluffy.user.zt;
+package com.oneluffy.zt;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,15 +42,15 @@ public class ZT05 {
       playerList.add(new Player(i + 1, Integer.parseInt(high[i]), Integer.parseInt(weight[i])));
     }
     Collections.sort(playerList);
-    for (int i = 0; i < playerList.size(); i++) {
-      System.out.print(playerList.get(i).idx + " ");
-    }
+      for (Player player : playerList) {
+          System.out.print(player.idx + " ");
+      }
   }
 
   static class Player implements Comparable<Player> {
-    private int idx;
-    private int high;
-    private int weight;
+    private final int idx;
+    private final int high;
+    private final int weight;
 
     public Player(int idx, int high, int weight) {
       this.idx = idx;

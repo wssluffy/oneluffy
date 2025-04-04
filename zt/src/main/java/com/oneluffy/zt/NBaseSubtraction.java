@@ -1,4 +1,4 @@
-package com.oneluffy.user.zt;
+package com.oneluffy.zt;
 
 import java.util.Scanner;
 
@@ -28,7 +28,7 @@ public class NBaseSubtraction {
     int[] values2 = stringToValues(num2, base);
 
     // 确保被减数不小于减数
-    boolean isNegative = compare(values1, values2, base) < 0;
+    boolean isNegative = compare(values1, values2) < 0;
     if (isNegative) {
       // 如果被减数小于减数，交换数值并标记结果为负数
       int[] temp = values1;
@@ -87,7 +87,7 @@ public class NBaseSubtraction {
     return values;
   }
 
-  private static int compare(int[] values1, int[] values2, int base) {
+  private static int compare(int[] values1, int[] values2) {
     if (values1.length != values2.length) {
       return values1.length - values2.length;
     }
