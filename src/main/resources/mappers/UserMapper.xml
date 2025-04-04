@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oneluffy.mapper.UserMapper">
+    <!-- SQL 映射 -->
+    <insert id="insertUser" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user (name, gender, age, address, phone, email, created_at, updated_at)
+        VALUES (#{name}, #{gender}, #{age}, #{address}, #{phone}, #{email}, #{createdAt}, #{updatedAt})
+    </insert>
+
+    <update id="updateUser">
+        UPDATE user
+        SET name=#{name}, gender=#{gender}, age=#{age}, address=#{address}, phone=#{phone}, email=#{email}, updated_at=#{updatedAt}
+        WHERE id=#{id}
+    </update>
+
+    <delete id="deleteUser">
+        DELETE FROM user
+        WHERE id=#{id}
+    </delete>
+
+    <select id="getUserById" resultType="com.oneluffy.entity.User">
+        SELECT * FROM user
+        WHERE id=#{id}
+    </select>
+
+    <select id="getAllUsers" resultType="com.oneluffy.entity.User">
+        SELECT * FROM user
+    </select>
+</mapper>
