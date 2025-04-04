@@ -6,11 +6,11 @@
 
 1. 克隆项目到本地。
 2. 在项目根目录下运行 `mvn spring-boot:run` 启动应用程序。
-3. 访问 `http://localhost:8080/demo/swagger-ui/` 来查看自动生成的 API 文档。
+3. 访问 `http://localhost:8080/user/swagger-ui/` 来查看自动生成的 API 文档。
 
 ## API 文档
 
-完成这些步骤后，您可以通过访问 [http://localhost:8080/demo/swagger-ui/](http://localhost:8080/demo/swagger-ui/) 来查看自动生成的 API 文档。
+完成这些步骤后，您可以通过访问 [http://localhost:8080/user/swagger-ui/](http://localhost:8080/user/swagger-ui/) 来查看自动生成的 API 文档。
 
 ## 其他说明
 
