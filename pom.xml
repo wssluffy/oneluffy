@@ -12,6 +12,7 @@
         <module>user</module>
         <module>zt</module>
         <module>consul-server</module>
+        <module>consul-consumer</module>
     </modules>
 
     <parent>

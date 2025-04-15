@@ -1,0 +1,3 @@
+com\oneluffy\consumer\ConsulConsumerApplication.class
+com\oneluffy\consumer\feign\ConsulServerClient.class
+com\oneluffy\consumer\controller\TestController.class
