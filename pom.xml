@@ -8,7 +8,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>mq</module>
+        <module>rabbitmq</module>
         <module>user</module>
         <module>zt</module>
         <module>consul-server</module>
