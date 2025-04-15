@@ -10,7 +10,7 @@ import com.oneluffy.consumer.config.MysqlConfig;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
-@EnableConfigurationProperties({MysqlConfig.class})
+@EnableConfigurationProperties
 public class ConsulConsumerApplication {
     public static void main(String[] args) {
         SpringApplication.run(ConsulConsumerApplication.class, args);
