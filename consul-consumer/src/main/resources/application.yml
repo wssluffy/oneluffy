@@ -2,6 +2,9 @@ server:
   port: 8083
 
 spring:
+  config:
+    import: 
+      - "optional:consul:"
   application:
     name: consul-consumer
   cloud:
@@ -14,4 +17,16 @@ spring:
         prefer-ip-address: true
         ip-address: ${spring.cloud.client.ip-address}
         health-check-path: /actuator/health
-        health-check-interval: 10s 
+        health-check-interval: 10s
+      config:
+        enabled: true
+        format: YAML
+        default-context: consulConsumerConfig
+        profile-separator: '-'
+        data-key: consulConfig
+        watch:
+          enabled: true
+          delay: 1000
+        prefixes: config
+  profiles:
+    active: dev
