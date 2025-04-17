@@ -23,7 +23,6 @@ public class MessageController {
         Map<String, Object> map = new HashMap<>();
         map.put("message", message);
         map.put("time", LocalDateTime.now().toString());
-        
         messageProducer.sendDirectMessage(map);
         return "直连消息发送成功";
     }
@@ -40,7 +39,6 @@ public class MessageController {
         map.put("message", message);
         map.put("routingKey", routingKey);
         map.put("time", LocalDateTime.now().toString());
-        
         messageProducer.sendTopicMessage(routingKey, map);
         return "主题消息发送成功，路由键: " + routingKey;
     }
