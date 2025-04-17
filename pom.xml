@@ -16,6 +16,8 @@
         <module>eureka-server</module>
         <module>eureka-provider</module>
         <module>eureka-consumer</module>
+        <module>zookeeper-server</module>
+        <module>zookeeper-consumer</module>
     </modules>
 
     <parent>
