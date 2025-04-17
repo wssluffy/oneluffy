@@ -88,6 +88,8 @@ spring:
 ## 使用说明
 
 1. 确保已安装并启动RabbitMQ服务
+   进入目录RabbitMQ Server\rabbitmq_server-4.0.9\sbin，输入cmd命令：rabbitmq-plugins enable rabbitmq_management
+   启动成功后，访问 http://127.0.0.1:15672/
 2. 启动应用程序：`mvn spring-boot:run`
 3. 通过浏览器或API工具访问接口，例如：
    - http://localhost:8080/mq/direct?message=测试直连消息

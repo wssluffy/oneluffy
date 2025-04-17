@@ -13,6 +13,9 @@
         <module>zt</module>
         <module>consul-server</module>
         <module>consul-consumer</module>
+        <module>eureka-server</module>
+        <module>eureka-provider</module>
+        <module>eureka-consumer</module>
     </modules>
 
     <parent>
@@ -25,6 +28,7 @@
         <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <spring-cloud.version>2023.0.0</spring-cloud.version>
     </properties>
 
     <dependencies>
@@ -51,6 +55,18 @@
         </dependency>
 
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <!--使用aliyun的Maven镜像源提升下载速度-->
     <repositories>
