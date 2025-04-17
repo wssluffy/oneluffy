@@ -1,5 +1,5 @@
 server:
-  port: 8001
+  port: 8003  # 使用不同端口
 
 spring:
   application:
@@ -11,7 +11,7 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
   instance:
     prefer-ip-address: true
-    instance-id: ${spring.application.name}:${server.port}
+    instance-id: ${spring.application.name}:${server.port}  # 实例ID加上端口号，方便区分
     
 management:
   endpoints:
@@ -28,6 +28,5 @@ management:
 info:
   app:
     name: ${spring.application.name}
-    description: Eureka Provider Service (Instance 1)
-    version: 1.0.0
-    
+    description: Eureka Provider Service (Instance 2)
+    version: 1.0.0 
