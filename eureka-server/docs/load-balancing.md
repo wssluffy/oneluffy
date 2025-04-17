@@ -1,137 +1,177 @@
-# Eureka 负载均衡机制
-
-Spring Cloud Eureka 与 Ribbon 集成，提供基于客户端的负载均衡能力。本文档介绍负载均衡的原理和测试方法。
+# Spring Cloud LoadBalancer 负载均衡说明
 
 ## 负载均衡原理
 
-1. **服务注册**：多个相同服务实例(Provider)注册到Eureka Server，每个实例有不同的实例ID
-2. **服务发现**：Consumer从Eureka Server获取Provider的所有实例列表
-3. **负载均衡策略**：使用Ribbon进行负载均衡，默认采用轮询算法
+Spring Cloud LoadBalancer是Spring官方提供的客户端负载均衡器，用于替代Netflix Ribbon。它的工作原理如下：
 
-## 负载均衡实现方式
+1. **服务发现**
+   - 服务提供者启动时向Eureka Server注册
+   - 服务消费者从Eureka Server获取服务列表
+   - 定期更新服务列表保持最新状态
 
-Spring Cloud中的负载均衡主要有两种实现方式：
+2. **负载均衡过程**
+   - 消费者发起请求时，LoadBalancer拦截请求
+   - 从服务列表中按策略选择一个实例
+   - 将请求转发到选中的实例
+   - 处理响应并返回结果
 
-### 1. Ribbon 负载均衡
+3. **故障处理**
+   - 自动剔除不健康的实例
+   - 支持重试机制
+   - 服务恢复后自动加回
 
-Ribbon是Spring Cloud内置的负载均衡组件，主要功能包括：
-- 服务发现
-- 服务选择规则
-- 服务监听
-- 服务重试机制
+## 负载均衡策略
 
-默认提供的负载均衡策略有：
-- **RoundRobinRule**：轮询策略（默认）
-- **RandomRule**：随机策略
-- **RetryRule**：重试策略
-- **WeightedResponseTimeRule**：权重策略
-- **BestAvailableRule**：最低并发策略
+Spring Cloud LoadBalancer提供以下负载均衡策略：
 
-### 2. Feign 负载均衡
-
-Feign是一个声明式HTTP客户端，集成了Ribbon。使用@FeignClient注解可以定义一个接口，然后通过接口调用远程服务，底层使用Ribbon进行负载均衡。
-
-在本项目中，通过ProviderService接口使用Feign调用Provider服务的API。
-
-## 测试负载均衡
-
-本项目提供了两种方式测试负载均衡：
-
-### 1. 启动多个Provider实例
-
-```bash
-# 启动第一个Provider实例（端口8001）
-java -jar eureka-provider.jar
-
-# 启动第二个Provider实例（端口8003）
-java -jar eureka-provider.jar --spring.profiles.active=instance2
-```
-
-### 2. 通过Consumer测试负载均衡
-
-项目提供了以下REST接口用于测试负载均衡：
-
-1. **查看所有Provider实例**：
-   ```
-   GET http://localhost:8002/consumer/instances
+1. **轮询（Round Robin）- 默认策略**
+   - 按顺序依次选择服务实例
+   - 适用于服务器性能相近的情况
+   ```java
+   new RoundRobinLoadBalancer(supplier, "eureka-provider");
    ```
 
-2. **测试Feign负载均衡**（连续调用10次，观察端口变化）：
-   ```
-   GET http://localhost:8002/consumer/feign-lb
-   ```
-
-3. **测试Ribbon负载均衡**（使用LoadBalancerClient选择服务）：
-   ```
-   GET http://localhost:8002/consumer/ribbon-lb
+2. **随机（Random）**
+   - 随机选择一个服务实例
+   - 适用于服务器性能差异不大的情况
+   ```java
+   new RandomLoadBalancer(supplier, "eureka-provider");
    ```
 
-4. **查看当前负载均衡策略**：
-   ```
-   GET http://localhost:8002/consumer/lb-config
-   ```
+3. **自定义策略**
+   - 实现ReactorServiceInstanceLoadBalancer接口
+   - 根据业务需求自定义选择逻辑
 
-## 自定义负载均衡策略
+## 配置方式
 
-本项目实现了两种自定义负载均衡策略的方法：
-
-### 1. 静态配置（通过配置类）
-
-通过创建Ribbon配置类来自定义负载均衡策略。这种方式在应用启动时生效，之后不能修改。
+### 1. 配置类方式
 
 ```java
-// 注意：此配置类不能放在@ComponentScan扫描的包下，否则会被所有Ribbon客户端共享
 @Configuration
-public class RibbonConfig {
+public class CustomLoadBalancerConfiguration {
     @Bean
-    public IRule ribbonRule() {
-        // 使用随机策略替代默认的轮询策略
-        return new RandomRule();
+    public ReactorLoadBalancer<ServiceInstance> reactorServiceInstanceLoadBalancer(
+            Environment environment,
+            LoadBalancerClientFactory loadBalancerClientFactory) {
+        String name = environment.getProperty(LoadBalancerClientFactory.PROPERTY_NAME);
+        return new RandomLoadBalancer(loadBalancerClientFactory
+                .getLazyProvider(name, ServiceInstanceListSupplier.class),
+                name);
     }
 }
 ```
 
-然后在启动类或配置类上使用`@RibbonClient`注解指定配置：
-
+使用配置：
 ```java
-@Configuration
-@RibbonClient(name = "eureka-provider", configuration = RibbonConfig.class)
-public class CustomRibbonClientConfig {
-    // 这个类不需要任何方法，只是用来标记配置
-}
+@LoadBalancerClient(name = "eureka-provider", 
+                   configuration = CustomLoadBalancerConfiguration.class)
 ```
 
-### 2. 动态配置（通过REST API）
+### 2. 配置文件方式
 
-本项目提供了REST API来动态切换负载均衡策略：
+在application.yml中配置：
 
-1. **切换负载均衡策略**：
-   ```
-   GET http://localhost:8002/ribbon/rule/{serviceName}/{ruleType}
-   ```
-   
-   例如，将eureka-provider服务切换为随机策略：
-   ```
-   GET http://localhost:8002/ribbon/rule/eureka-provider/random
-   ```
-   
-   支持的策略类型有：
-   - random (RandomRule)
-   - roundrobin (RoundRobinRule)
-   - retry (RetryRule)
-   - response (WeightedResponseTimeRule)
-   - bestavailable (BestAvailableRule)
-   - zone (ZoneAvoidanceRule)
+```yaml
+spring:
+  cloud:
+    loadbalancer:
+      <service-id>:
+        enabled: true
+        retry:
+          enabled: true
+        health-check:
+          path: /actuator/health
+          interval: 30s
+```
 
-2. **查看当前配置的规则**：
-   ```
-   GET http://localhost:8002/ribbon/rules
-   ```
+## 重试机制
 
-## 注意事项
+Spring Cloud LoadBalancer支持请求重试：
 
-1. 负载均衡是在客户端(Consumer)实现的，不是在服务端
-2. Eureka的负载均衡默认使用Ribbon实现
-3. 服务实例必须有相同的serviceId，才能进行负载均衡
-4. 如果只有一个Provider实例，负载均衡也会正常工作，只是始终选择同一个实例
-5. 自定义Ribbon配置类不能放在主应用上下文的@ComponentScan扫描范围内，否则会被所有的Ribbon客户端共享，产生意外的结果 
+```yaml
+spring:
+  cloud:
+    loadbalancer:
+      retry:
+        enabled: true
+        max-retries-on-same-service-instance: 1
+        max-retries-on-next-service-instance: 2
+        retry-on-all-operations: true
+        backoff:
+          enabled: true
+          initial-interval: 1000
+          max-interval: 5000
+          multiplier: 2
+```
+
+## 健康检查
+
+配置健康检查以剔除不健康的实例：
+
+```yaml
+spring:
+  cloud:
+    loadbalancer:
+      health-check:
+        enabled: true
+        path: 
+          default: /actuator/health
+        interval: 30s
+        initial-delay: 10s
+```
+
+## 监控指标
+
+Spring Cloud LoadBalancer提供以下监控指标：
+
+1. **实例选择**
+   - 选择次数
+   - 选择耗时
+   - 选择失败次数
+
+2. **请求统计**
+   - 请求总数
+   - 成功请求数
+   - 失败请求数
+   - 重试次数
+
+可通过Actuator的/metrics端点查看：
+```
+/actuator/metrics/spring.cloud.loadbalancer.*
+```
+
+## 最佳实践
+
+1. **合理配置重试**
+   - 避免过多重试导致系统负载过高
+   - 设置合适的超时时间
+
+2. **启用健康检查**
+   - 及时发现并剔除不健康实例
+   - 设置合适的检查间隔
+
+3. **选择合适的负载均衡策略**
+   - 考虑服务器性能差异
+   - 考虑业务特点
+
+4. **监控和告警**
+   - 监控负载均衡指标
+   - 设置合理的告警阈值
+
+## 常见问题
+
+1. **服务发现延迟**
+   - 原因：服务注册后需要等待服务列表刷新
+   - 解决：适当调整刷新间隔
+
+2. **重试导致超时**
+   - 原因：重试次数过多或间隔过长
+   - 解决：调整重试参数
+
+3. **负载不均衡**
+   - 原因：服务器性能差异大
+   - 解决：考虑使用权重策略
+
+4. **健康检查不准确**
+   - 原因：检查间隔过长或路径配置错误
+   - 解决：调整健康检查配置 
