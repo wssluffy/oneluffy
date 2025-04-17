@@ -1,4 +1,4 @@
-package com.oneluffy.consumer.config;
+package com.oneluffy.consul.config;
 
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.loadbalancer.core.RandomLoadBalancer;

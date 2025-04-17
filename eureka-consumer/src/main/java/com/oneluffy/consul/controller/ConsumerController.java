@@ -1,6 +1,6 @@
-package com.oneluffy.consumer.controller;
+package com.oneluffy.consul.controller;
 
-import com.oneluffy.consumer.feign.ProviderService;
+import com.oneluffy.consul.feign.ProviderService;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;

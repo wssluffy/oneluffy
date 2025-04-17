@@ -1,6 +1,5 @@
-package com.oneluffy.consumer.config;
+package com.oneluffy.consul.config;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.context.config.annotation.RefreshScope;

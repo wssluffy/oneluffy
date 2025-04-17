@@ -1,16 +1,15 @@
-package com.oneluffy.consumer.controller;
+package com.oneluffy.consul.controller;
 
-import com.oneluffy.consumer.feign.ConsulServerClient;
+import com.oneluffy.consul.feign.ConsulServerClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 @RestController
-public class TestController {
+public class ConsumerController {
 
     private final ConsulServerClient consulServerClient;
 
-    public TestController(ConsulServerClient consulServerClient) {
+    public ConsumerController(ConsulServerClient consulServerClient) {
         this.consulServerClient = consulServerClient;
     }
 

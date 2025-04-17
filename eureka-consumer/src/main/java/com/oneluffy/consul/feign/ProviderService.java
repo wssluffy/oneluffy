@@ -1,4 +1,4 @@
-package com.oneluffy.consumer.feign;
+package com.oneluffy.consul.feign;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;

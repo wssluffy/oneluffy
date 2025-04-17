@@ -1,8 +1,7 @@
-package com.oneluffy.consumer.controller;
+package com.oneluffy.consul.controller;
 
-import com.oneluffy.consumer.config.MysqlConfig;
+import com.oneluffy.consul.config.MysqlConfig;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

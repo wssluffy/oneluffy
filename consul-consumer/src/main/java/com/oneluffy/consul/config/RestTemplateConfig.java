@@ -1,4 +1,4 @@
-package com.oneluffy.consumer.config;
+package com.oneluffy.consul.config;
 
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
