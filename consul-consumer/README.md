@@ -46,6 +46,10 @@ consul-consumer
 1. **环境准备**
    - 安装并启动Consul服务
    - 确保consul-server服务已启动并注册到Consul
+   - 第一种启动方法：consul agent -dev 默认启动本地127.0.0.1:8500
+     另一种启动方式 使用 ipconfig ：查看自己本地的ipv4地址
+     使用：consul.exe agent -dev -client 自己本地ipv4地址 启动consul
+     用自己的本地ip地址+8500访问网站
 
 2. **启动服务**
    ```bash
