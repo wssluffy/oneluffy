@@ -25,7 +25,7 @@ public class MessageConsumer {
      * 监听主题队列1
      */
     @RabbitListener(queues = RabbitMQConfig.TOPIC_QUEUE_1)
-    public void receiveTopicMessage1(Map<String, Object> message) {
+    public void receiveTopicMessage1(Object message) {
         logger.info("主题队列1接收到消息: {}", message);
     }
 
