@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ZtApplication {
+public class AlgorithmApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ZtApplication.class, args);
+        SpringApplication.run(AlgorithmApplication.class, args);
     }
 
 }
