@@ -1,0 +1,86 @@
+version: '3.8'
+
+services:
+  zookeeper-server:
+    build: ./zookeeper-server
+    ports:
+      - "8080:8080"
+    networks:
+      - oneluffy-net
+
+  zookeeper-consumer:
+    build: ./zookeeper-consumer
+    ports:
+      - "8081:8081"
+    depends_on:
+      - zookeeper-server
+    networks:
+      - oneluffy-net
+
+  consul-server:
+    build: ./consul-server
+    ports:
+      - "8500:8500"
+    networks:
+      - oneluffy-net
+
+  consul-consumer:
+    build: ./consul-consumer
+    ports:
+      - "8082:8082"
+    depends_on:
+      - consul-server
+    networks:
+      - oneluffy-net
+
+  user:
+    build: ./user
+    ports:
+      - "8083:8083"
+    depends_on:
+      - consul-server
+    networks:
+      - oneluffy-net
+
+  zt:
+    build: ./algorithm
+    ports:
+      - "8085:8085"
+    networks:
+      - oneluffy-net
+
+  eureka-server:
+    build: ./eureka-server
+    ports:
+      - "8761:8761"
+    networks:
+      - oneluffy-net
+
+  eureka-consumer:
+    build: ./eureka-consumer
+    ports:
+      - "8086:8086"
+    depends_on:
+      - eureka-server
+    networks:
+      - oneluffy-net
+
+  eureka-provider:
+    build: ./eureka-provider
+    ports:
+      - "8087:8087"
+    depends_on:
+      - eureka-server
+    networks:
+      - oneluffy-net
+
+  rabbitmq:
+    build: ./rabbitmq
+    ports:
+      - "15672:15672"
+    networks:
+      - oneluffy-net
+
+networks:
+  oneluffy-net:
+    driver: bridge

@@ -10,7 +10,7 @@
     <modules>
         <module>rabbitmq</module>
         <module>user</module>
-        <module>zt</module>
+        <module>algorithm</module>
         <module>consul-server</module>
         <module>consul-consumer</module>
         <module>eureka-server</module>

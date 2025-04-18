@@ -8,9 +8,9 @@
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>zt</artifactId>
+    <artifactId>algorithm</artifactId>
     <version>1.0.0</version>
-    <name>zt</name>
-    <description>zt</description>
+    <name>algorithm</name>
+    <description>algorithm</description>
 
 </project>
